@@ -1,9 +1,9 @@
 import { Request, Response, Router } from 'express';
-import { ValidateDto } from '@/shared/middlewares/exception/validate.middleware';
 import { IRouter } from '@/core/interfaces/router.interface';
 import { post, route } from '@/core/decorators';
 import { AuthController } from './auth.controller';
 import { authDto } from './auth.dto';
+import { ValidateDto } from '@/shared/middlewares';
 
 @route('/auth')
 export class authRouter implements IRouter {

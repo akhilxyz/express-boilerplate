@@ -2,6 +2,7 @@ import { UserRepository } from '@/core/domain/repositories/user.repository';
 import { User } from '@/core/domain/entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from './user.dto';
 import { cryptoUtil } from '@/shared/utils';
+import { VALIDATION_MESSAGES } from '@/shared/constants/messages';
 
 export class UserService {
   private userRepository: UserRepository;
@@ -19,13 +20,16 @@ export class UserService {
   }
 
   async create(userDto: CreateUserDto): Promise<User> {
-    if (await this.findByEmail(userDto.email)) throw 'Email already exists';
+    if (await this.findByEmail(userDto.email)) throw VALIDATION_MESSAGES.EMAIL_ALREADY_EXISTS;
     userDto.password = await cryptoUtil.hash(userDto.password);
     const user = await this.userRepository.create(userDto);
     return user;
   }
 
   async update(id: string, userData: Partial<UpdateUserDto>): Promise<void> {
+    if (userData.password) {
+      userData.password = await cryptoUtil.hash(userData.password)
+    }
     await this.userRepository.update(id, userData);
   }
 
