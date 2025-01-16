@@ -49,8 +49,8 @@ A highly scalable and maintainable Node.js boilerplate with TypeScript, followin
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd node-typescript-boilerplate
+git clone https://github.com/akhilxyz/express-boilerplate
+cd express-boilerplate
 ```
 
 2. Install dependencies:
