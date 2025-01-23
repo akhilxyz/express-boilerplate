@@ -8,7 +8,7 @@ export async function bootstrapApplication(): Promise<Express> {
 
     // Initialize Database
     await bootstrapDatabase();
-    
+
     // Initialize Express
     const app = bootstrapExpress();
 

@@ -11,9 +11,7 @@ export class UserController {
     const { id } = req.params;
     try {
       const user = await this.userService.findById(id);
-      if (!user) {
-        return res.status(404).json({ message: USER_MESSAGES.NOT_FOUND });
-      }
+      if (!user) return res.status(404).json({ message: USER_MESSAGES.NOT_FOUND });
       return res.json(user);
     } catch (error) {
       return ResponseUtil.error(res, error);
@@ -28,6 +26,7 @@ export class UserController {
       return ResponseUtil.error(res, error);
     }
   }
+
 
   async updateUser(req: Request | any, res: Response) {
     const { id } = req['user']

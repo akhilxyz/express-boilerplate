@@ -1,17 +1,17 @@
-// import rateLimit from 'express-rate-limit';
-// import { Config } from '../../../config/config';
+import { ServerConfig } from '@/config';
+import rateLimit from 'express-rate-limit';
 
-// export class RateLimitMiddleware {
-//   private config: Config;
+export class RateLimitMiddleware {
+    private config: ServerConfig;
 
-//   constructor(config: Config) {
-//     this.config = config;
-//   }
+    constructor() {
+        this.config = ServerConfig.create();
+    }
 
-//   create() {
-//     return rateLimit({
-//       windowMs: this.config.server.rateLimitWindowMs,
-//       max: this.config.server.rateLimitMax,
-//     });
-//   }
-// }
+    create() {
+        return rateLimit({
+            windowMs: this.config.rateLimitWindowMs,
+            max: this.config.rateLimitMax,
+        });
+    }
+}

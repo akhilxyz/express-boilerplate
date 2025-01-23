@@ -1,6 +1,6 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class authDto {
+export class AuthDto {
     @IsEmail()
     @IsNotEmpty()
     email!: string;
@@ -8,4 +8,42 @@ export class authDto {
     @IsString()
     @IsNotEmpty()
     password!: string;
+}
+
+
+
+export class RestPasswordDto {
+    @IsEmail()
+    @IsNotEmpty()
+    email!: string;
+
+    @IsNumber()
+    @IsNotEmpty()
+    otp!: string;
+
+    @IsString()
+    @IsNotEmpty()
+    password?: string;
+
+}
+
+export class RequestOTPDto {
+    @IsEmail()
+    @IsNotEmpty()
+    email!: string;
+
+    @IsString()
+    @IsOptional()
+    type!: string;
+}
+
+
+export class OTPDto {
+    @IsEmail()
+    @IsNotEmpty()
+    email!: string;
+
+    @IsString()
+    @IsNotEmpty()
+    otp!: string;
 }

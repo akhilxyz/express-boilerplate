@@ -2,7 +2,9 @@ import { UserRepository } from '@/core/domain/repositories/user.repository';
 import { User } from '@/core/domain/entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from './user.dto';
 import { cryptoUtil } from '@/shared/utils';
-import { VALIDATION_MESSAGES } from '@/shared/constants/messages';
+import { AUTH_MESSAGE, VALIDATION_MESSAGES } from '@/shared/constants/messages';
+import AuthModule from '../auth/auth.module';
+import { OTPType } from '@/core/enums';
 
 export class UserService {
   private userRepository: UserRepository;
@@ -22,9 +24,12 @@ export class UserService {
   async create(userDto: CreateUserDto): Promise<User> {
     if (await this.findByEmail(userDto.email)) throw VALIDATION_MESSAGES.EMAIL_ALREADY_EXISTS;
     userDto.password = await cryptoUtil.hash(userDto.password);
+    if (!(await AuthModule.service.verifyOTP(OTPType.OTP, userDto.email, userDto.otp))) throw AUTH_MESSAGE.INVALID_OTP;
+    userDto.isEmailVerified = true;
     const user = await this.userRepository.create(userDto);
     return user;
   }
+
 
   async update(id: string, userData: Partial<UpdateUserDto>): Promise<void> {
     if (userData.password) {

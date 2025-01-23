@@ -1,6 +1,7 @@
 import { UserController } from './user.controller';
 import { UserRouter } from './user.routes';
 import { UserService } from './user.service';
+import { userSwagger } from './user.swagger';
 
 // export default to auto load routes
 export default class UserModule {
@@ -9,5 +10,6 @@ export default class UserModule {
   public static controller = new UserController(this.service);
   public static routes = new UserRouter(this.controller);
   public static router = this.routes.router
+  public static swagger = userSwagger
 }
 
