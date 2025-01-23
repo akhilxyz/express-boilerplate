@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { del, post, put, route , useGuard } from '@/core/decorators';
+import { del, post, put, route, useGuard } from '@/core/decorators';
 import { IRouter } from '@/core/interfaces/router.interface';
 import { CreateUserDto, UpdateUserDto } from './user.dto';
 import { UserController } from './user.controller';
@@ -11,7 +11,7 @@ export class UserRouter implements IRouter {
 
     constructor(private userController: UserController) { }
 
-    @post('/')
+    @post('/register')
     @ValidateDto(CreateUserDto)
     async createUser(req: Request, res: Response) {
         this.userController.createUser(req, res)
